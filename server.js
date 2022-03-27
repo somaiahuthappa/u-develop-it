@@ -20,10 +20,37 @@ const db = mysql.createConnection(
     console.log('Connected to the electin database')
 );
 
-db.query(`SELECT * FROM candidates`, (err, rows) => {
-    console.log(rows);
-});
+// gets all the candidates
+// db.query(`SELECT * FROM candidates`, (err, rows) => {
+//     console.log(rows);
+// });
 
+// get a single candidate
+// db.query(`SELECT * FROM candidates WHERE id = 1`, (err, row) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(row);
+// }); 
+
+// Delete a candidate
+// db.query(`DELETE FROM candidates WHERE id = ?`, 1, (err, result) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(result);
+// })
+
+// Create a candidate
+// const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected) VALUES (?,?,?,?)`;
+// const params = [1, 'Ronald', 'Firbark', 1];
+
+// db.query(sql, params, (err, result) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(result);
+// });
 
 // Default request for any other request (Not Found)
 app.use((req, res) => {
