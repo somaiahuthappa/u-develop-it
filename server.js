@@ -23,7 +23,11 @@ const db = mysql.createConnection(
 
 // gets all the candidates
 app.get('/api/candidates', (req, res) => {
-    const sql = `SELECT * FROM candidates`
+    const sql = `SELECT candidates.*, parties.name 
+                AS party_name
+                FROM candidates
+                LEFT JOIN parties
+                ON candidates.party_id = parties.id;`
 
     db.query(sql, (err, rows) => {
         if (err) {
@@ -39,7 +43,12 @@ app.get('/api/candidates', (req, res) => {
 
 // get a single candidate
 app.get('/api/candidates/:id', (req, res) => {
-    const sql = `SELECT * FROM candidates WHERE id = ?`;
+    const sql = `SELECT candidates.*, parties.name
+                AS party_name
+                FROM candidates
+                LEFT JOIN parties 
+                ON candidates.party_id = parties.id
+                WHERE candidates.id = ?;`;
     const params = [req.params.id];
 
     db.query(sql, params, (err, row) => {
@@ -92,7 +101,7 @@ app.post('/api/candidates', ({ body }, res) => {
 
     db.query(sql, params, (err, result) => {
         if (err) {
-            res.status(400).json({error: err.message});
+            res.status(400).json({ error: err.message });
             return;
         }
         res.json({
